@@ -127,6 +127,7 @@ my $time = time;
     my @mp_surv = ('U', 'U', 'U');
     my @mp_old  = ('U', 'U', 'U');
     my @mp_perm = ('U', 'U', 'U');
+    my @mp_meta = ('U', 'U', 'U');
     for my $mp (keys %$value) {
         if ($mp =~ /name=.*Eden Space/) {
             @mp_eden = @{ $value->{$mp}{Usage} }{qw(max committed used)}
@@ -136,6 +137,8 @@ my $time = time;
             @mp_old  = @{ $value->{$mp}{Usage} }{qw(max committed used)}
         } elsif ($mp =~ /name=.*Perm Gen/) {
             @mp_perm = @{ $value->{$mp}{Usage} }{qw(max committed used)}
+        } elsif ($mp =~ /name=.*Metaspace/) {
+            @mp_meta = @{ $value->{$mp}{Usage} }{qw(max committed used)}
         } elsif ($mp =~ /name=Code Cache/) {
             ;
         }
@@ -156,6 +159,10 @@ my $time = time;
     print "metrics.memory_pool.perm.max.gauge\t$mp_perm[0]\t$time\n";
     print "metrics.memory_pool.perm.committed.gauge\t$mp_perm[1]\t$time\n";
     print "metrics.memory_pool.perm.used.gauge\t$mp_perm[2]\t$time\n";
+
+    print "metrics.memory_pool.meta.max.gauge\t$mp_meta[0]\t$time\n";
+    print "metrics.memory_pool.meta.committed.gauge\t$mp_meta[1]\t$time\n";
+    print "metrics.memory_pool.meta.used.gauge\t$mp_meta[2]\t$time\n";
 }
 
 {
