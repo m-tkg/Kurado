@@ -17,12 +17,14 @@ sub metrics_list {
 
     # info
     my @info;
+    my $is_java8 = 0;
     for my $key ( $plugin->sort_info(keys %$meta) ) {
         if ( $key eq 'uptime' ) {
             push @info, 'uptime', $plugin->uptime2str($meta->{uptime});
         }
         else {
             push @info, $key, $meta->{$key};
+            $is_java8 = 1 if( $meta->{vm} =~ /1\.8\.[0-9]+/ );
         }
     }
     my ($port) = @{$plugin->plugin_arguments};
@@ -32,7 +34,8 @@ sub metrics_list {
     $list .= '#Jolokia ('.$port.') Memory'."\n";
     $list .= "$_\n" for qw/m_heap_s m_nonheap_s/;
     $list .= '#Jolokia ('.$port.') Memory Pool'."\n";
-    $list .= "$_\n" for qw/mp_eden_s mp_surv_s mp_old_s mp_perm_s/;
+    $list .= "$_\n" for qw/mp_eden_s mp_surv_s mp_old_s/;
+    $list .= $is_java8 ? "mp_meta_s\n" : "mp_perm_s\n";
     print $list;
 }
 
@@ -205,6 +208,19 @@ GPRINT:my3:AVERAGE:Ave\:%6.1lf%S
 GPRINT:my3:MAX:Max\:%6.1lf%S\l
 LINE1:my3#8b4444
 
-
-
-
+@@ mp_meta_s
+Metaspace
+DEF:my1=<%RRD memory_pool.meta.max.gauge %>:mp_meta_max_s:AVERAGE
+DEF:my2=<%RRD memory_pool.meta.committed.gauge %>:mp_meta_comt_s:AVERAGE
+DEF:my3=<%RRD memory_pool.meta.used.gauge %>:mp_perm_meta_s:AVERAGE
+GPRINT:my1:LAST:Max\: %6.1lf%S\l
+AREA:my2#73b675:Committed
+GPRINT:my2:LAST:Cur\:%6.1lf%S
+GPRINT:my2:AVERAGE:Ave\:%6.1lf%S
+GPRINT:my2:MAX:Max\:%6.1lf%S\l
+LINE1:my2#3d783f
+AREA:my3#b67777:Used     
+GPRINT:my3:LAST:Cur\:%6.1lf%S
+GPRINT:my3:AVERAGE:Ave\:%6.1lf%S
+GPRINT:my3:MAX:Max\:%6.1lf%S\l
+LINE1:my3#8b4444
