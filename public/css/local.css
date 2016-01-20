@@ -134,6 +134,12 @@ body {
   color: #fff;
 }
 
+#subnav .label-for-show-warn {
+  font-weight: normal;
+  font-size: 12px;
+  color: #fff;
+}
+
 .plugin-nav {
   border-top: 1px solid #272b30;
   overflow-y: hidden;
