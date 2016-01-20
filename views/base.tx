@@ -137,6 +137,7 @@ $(function(){
           }
         });
         if ( endnum < hostslen ) setTimeout(function(){ haserror_api(startnum+50) }, 100);
+        show_warn_only(show_warn);
       },
       "json"
     );
@@ -150,6 +151,13 @@ $(function(){
     $("#open-new").attr('checked',true);
   }
   $("#open-new").bootstrapSwitch({
+    size: 'mini'
+  });
+  var show_warn = $.cookie('show-warn');
+  if ( show_warn == true ) {
+    $("#show-warn").attr('checked',true);
+  }
+  $("#show-warn").bootstrapSwitch({
     size: 'mini'
   });
   var set_target = function (state) {
@@ -166,6 +174,27 @@ $(function(){
   $('#open-new').on('switchChange.bootstrapSwitch', function(event, state) {
     $.cookie('open-new', state, { expires: 365, path: '/' });
     set_target(state);
+    event.preventDefault();
+  });
+  var show_warn_only = function (state) {
+    if ( state == true ){
+      $('table.table').each(function(){
+        var record_warning = $(this).children('tbody').children('tr').children('td.warning');
+        $(this).children('tbody').children('tr').children('td').hide();
+        $(this).children('tbody').children('tr').children('td.warning').show();
+        if( record_warning.length == 0 )
+          $(this).hide();
+        else
+          $(this).show();
+      });
+    } else {
+      $('td').show();
+      $('table.table').show();
+    }
+  }
+  $('#show-warn').on('switchChange.bootstrapSwitch', function(event, state) {
+    $.cookie('show-warn', state, { expires: 365, path: '/' });
+    show_warn_only(state);
     event.preventDefault();
   });
 

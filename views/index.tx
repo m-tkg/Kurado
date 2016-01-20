@@ -11,19 +11,26 @@
           <a href="/">サーバ一覧</a>
         </h2>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-6">
         <div class="btn-toolbar" role="toolbar">
           <div class="btn-group btn-group-xs">
             <a id="uncheck-all" roll="button" class="btn btn-default disabled" href="#" title="チェックを外す"><span class="glyphicon glyphicon-unchecked"></span></a>
-            <a id="open-checked" roll="button" class="btn btn-default disabled" href="/"><span class="glyphicon glyphicon-new-window"></span> チェックしたサーバを表示</a>
+            <a id="open-checked" roll="button" class="btn btn-default disabled" href="/"><span class="glyphicon glyphicon-new-window"></span>チェックしたサーバを表示</a>
           </div>
           <div class="btn-group btn-group-xs">
 	     <input type="checkbox" id="open-new" name="open-new" />
 	     <label class="label-for-open-new" for="open-new">新規ウィンドウに開く</label>
           </div>
+          <div class="btn-group btn-group-xs">
+          |
+          </div>
+          <div class="btn-group btn-group-xs">
+             <input type="checkbox" id="show-warn" name="show-warn" />
+             <label class="label-for-show-warn" for="show-warn">警告のみ表示</label>
+          </div>
         </div>
       </div>
-      <div class="col-sm-4" style="text-align: right;">
+      <div class="col-sm-3" style="text-align: right;">
         <a href="/" class="subnav-brand">Kurado - Server Performance Metrics</a>
       </div>
     </div>
