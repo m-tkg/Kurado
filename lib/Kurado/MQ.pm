@@ -229,7 +229,7 @@ sub subscribe {
             or die "failed to send_message 'BLPOP': $!\n";
         my $res = $self->read_message();
         if ( !ref $res || !$res->success ) {
-            die "failed to pop msg: ".$res->error."\n";
+            die "failed to pop msg: ".(!ref $res ? '' : $res->error)."\n";
         }
         if ( ! defined $res->message || ! ref $res->message ) {
             # timeout
