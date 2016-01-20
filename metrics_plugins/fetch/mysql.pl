@@ -16,7 +16,7 @@ $port ||= $plugin->metrics_config->{MySQL}->{port};
 $port ||= 3306;
 my $user = $plugin->metrics_config->{MySQL}->{user} || 'root';
 my $password = $plugin->metrics_config->{MySQL}->{password} || '';
-my $dsn = "DBI:mysql:;hostname=$host;port=$port";
+my $dsn = "DBI:mysql:;hostname=$host;port=$port;mysql_skip_secure_auth=1;";
 my $dbh = eval {
     DBI->connect(
         $dsn,
